@@ -31,15 +31,26 @@ class PostService {
                 id: Number(id)
             }
         });
-        return post;
+        return post;        
     }
 
-    async update(post) {
-        if (!post.id) {
-            throw new Error('id not passed')
-        } 
-        const updatedPost = await prisma.post.findByIdAndUpdate(post.id, post, {new: true}) 
-        return updatedPost
+    async update(id, post) {
+        try {
+            if (!id) {
+                throw new Error('id not passed')
+            } 
+            const updatedPost = await prisma.post.update({
+                where: {
+                    id: Number(id)
+                },
+                data: post
+            })
+            return updatedPost
+        } catch (e) {
+            console.error(e)
+            throw new Error("Can't update this post");
+        }
+         
     }
 
     async delete(id) {

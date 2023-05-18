@@ -3,6 +3,7 @@ import PostController from '../controllers/PostController.js';
 import { checkAuth } from '../controllers/middleware/getAuth.js';
 import { postValidator } from '../controllers/validations/posts.js';
 import { handleValidationErrors } from '../controllers/middleware/handleValidationErrors.js';
+import { checkAuthor } from '../controllers/middleware/checkAuthor.js';
  
 const postRouter = new Router();
 
@@ -16,8 +17,9 @@ postRouter.post (
     PostController.create
 )
 postRouter.put  (
-    '/',
+    '/:id',
     checkAuth,
+    checkAuthor,
     postValidator,
     handleValidationErrors,
     PostController.update
@@ -25,6 +27,7 @@ postRouter.put  (
 postRouter.delete   (
     '/:id',
     checkAuth,
+    checkAuthor,
     PostController.delete
 )
 

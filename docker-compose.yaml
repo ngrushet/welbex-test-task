@@ -1,7 +1,6 @@
 version: '3.9'
 
 services:
-
   db:
     image: postgres
     restart: always
@@ -9,3 +8,22 @@ services:
       - .env
     ports:
       - $POSTGRES_DOCKER_PORT:$POSTGRES_HOST_PORT
+    networks:
+      - my-network
+
+  nodejs:
+    build: .
+    environment:
+      - POSTGRES_HOST=db
+    env_file:
+      - .env
+    ports:
+      - $APP_PORT:$APP_PORT
+    depends_on:
+      - db
+    networks:
+      - my-network
+    command: npm run start:test
+
+networks:
+  my-network:

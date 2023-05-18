@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { users } from './users.js';
+import { posts } from './posts.js';
 
 const prisma = new PrismaClient();
 
@@ -11,8 +12,16 @@ async function main() {
       data: user,
     });
   }
+  console.log('Users seeded');
 
-  console.log('Seeding completed!');
+  for (let post of posts) {
+    await prisma.post.create({
+      data: post,
+    });
+  }
+  console.log('Posts seeded');
+
+  console.log('Seeding completed! Nice:)');
 }
 
 main()

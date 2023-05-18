@@ -2,7 +2,7 @@ import express, { Router }  from 'express';
 import path                 from 'path';
 import { fileURLToPath }    from 'url';
 
-import userRouter       from './UserRouter.js';
+import userRouter       from './userRouter.js';
 import authRouter       from './authRouter.js';
 import postRouter       from './postRouter.js';
 import { checkAuth }    from '../controllers/middleware/getAuth.js';

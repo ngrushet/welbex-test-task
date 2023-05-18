@@ -2,8 +2,6 @@ import express, { json }    from 'express'
 import cors                 from 'cors'
 import router               from './src/routes/index.js'
 
-import dotenv from 'dotenv';
-
 const app = express()
 
 app.use(cors())
