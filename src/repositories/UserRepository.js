@@ -1,5 +1,3 @@
-// import User from "./models/User.js";
-
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient({})
 
@@ -8,15 +6,15 @@ class UserService {
         try {
             const checkUser = await prisma.user.findUnique({
                 where: {
-                    email: {
-                        eq: user
-                    }
+                    email: user.email
                 }
             });
             if (checkUser) {
                 throw new Error('User with passed email already exists');
             }
-            const newUser = await prisma.user.create(user);
+            const newUser = await prisma.user.create({
+                data: user
+            });
             return newUser;
         } catch (e) {
             console.error(e);
@@ -45,6 +43,15 @@ class UserService {
         return user;
     }
 
+    async getOneByEmail(email) {
+        const user = await prisma.user.findFirstOrThrow({
+            where: {
+                email: email
+            }
+        });
+        return user;
+    }
+
     async update(user) {
         if (!user.id) {
             throw new Error('id not passed')
@@ -57,7 +64,11 @@ class UserService {
         if (!id) {
             throw new Error("id not passed");
         } 
-        const deletedUser = await prisma.user.findByIdAndDelete(id) 
+        const deletedUser = await prisma.user.findByIdAndDelete({
+            where: {
+                id: id
+            }
+        }) 
         return deletedUser
     }
 }

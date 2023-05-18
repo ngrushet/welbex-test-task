@@ -9,7 +9,7 @@ datasource db {
 
 model Post {
   id          Int      @id @default(autoincrement())
-  message     String
+  message     String?
   media       String?
   authorId    Int
   createdDate DateTime @default(now())
@@ -18,8 +18,8 @@ model Post {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  Post     Post[]
+  id        Int    @id @default(autoincrement())
+  email     String @unique
+  passHash  String
+  Post      Post[]
 }
